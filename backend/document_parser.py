@@ -1,4 +1,3 @@
-
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
 import tempfile, os
@@ -9,15 +8,12 @@ def parse_document(file):
     client = DocumentAnalysisClient(endpoint, AzureKeyCredential(key))
 
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
-        content = file.getvalue()
-        tmp.write(content)
+        tmp.write(file.read())
         tmp_path = tmp.name
 
-    poller = client.begin_analyze_document("prebuilt-read", document=open(tmp_path, "rb"))
+    poller = client.begin_analyze_document("prebuilt-layout", document=open(tmp_path, "rb"))
     result = poller.result()
 
-    text = "\n".join([line.content for page in result.pages for line in page.lines])
+    text = "\\n".join([line.content for page in result.pages for line in page.lines])
     os.remove(tmp_path)
     return text
-
-
