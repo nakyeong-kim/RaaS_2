@@ -1,0 +1,9 @@
+
+streamlit
+openai
+chromadb
+langchain
+langchain-text-splitters
+azure-ai-formrecognizer
+azure-core
+numpy
