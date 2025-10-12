@@ -9,10 +9,12 @@ def parse_document(file):
     client = DocumentAnalysisClient(endpoint, AzureKeyCredential(key))
 
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
-        tmp.write(file.read())
+        content = file.getvalue()
+        tmp.write(content)
         tmp_path = tmp.name
 
     poller = client.begin_analyze_document("prebuilt-layout", document=open(tmp_path, "rb"))
+    poller = client.begin_analyze_document("prebuilt-layout", f)
     result = poller.result()
 
     text = "\n".join([line.content for page in result.pages for line in page.lines])
