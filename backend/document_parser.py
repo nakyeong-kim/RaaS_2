@@ -13,10 +13,11 @@ def parse_document(file):
         tmp.write(content)
         tmp_path = tmp.name
 
-    poller = client.begin_analyze_document("prebuilt-layout", document=open(tmp_path, "rb"))
+    poller = client.begin_analyze_document("prebuilt-read", document=open(tmp_path, "rb"))
     result = poller.result()
 
     text = "\n".join([line.content for page in result.pages for line in page.lines])
     os.remove(tmp_path)
     return text
+
 
