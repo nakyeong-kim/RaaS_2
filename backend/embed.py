@@ -4,6 +4,9 @@ from chromadb import Client
 from chromadb.config import Settings
 from openai import AzureOpenAI
 import os
+import chromadb
+
+chromadb.api.client.SharedSystemClient.clear_system_cache()
 
 class EmbedManager:
     def __init__(self):
@@ -27,3 +30,4 @@ class EmbedManager:
     def search(self, q_vec, top_k=5):
         results = self.collection.query(query_embeddings=[q_vec], n_results=top_k)
         return results["documents"][0] if results["documents"] else []
+
