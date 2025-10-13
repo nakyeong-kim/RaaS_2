@@ -21,3 +21,6 @@ if st.button("질의 실행") and query:
         answer = st.session_state.rag.query(query)
         st.markdown("### 🧠 답변:")
         st.write(answer)
+
+import requests
+st.write(requests.get("http://10.233.47.163:8000/ping").json())
