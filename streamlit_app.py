@@ -23,4 +23,6 @@ if st.button("질의 실행") and query:
         st.write(answer)
 
 import requests
+st.write("여기에..")
 st.write(requests.get("http://10.233.47.163:8000/ping").json())
+
