@@ -171,7 +171,7 @@ with col2:
         for t in st.session_state.ontology_triples:
             G.add_edge(t["subject"], t["object"], relation=t["relation"])
 
-        net = Network(height="400px", width="100%", directed=True)
+        net = Network(height="400px", width="800px", directed=True)
         net.from_nx(G)
         for node in net.nodes:
             # node["title"] = node id or 기타 hover 정보
@@ -230,6 +230,7 @@ with col2:
 # import requests
 # st.write("여기에..")
 # st.write(requests.get("http://10.233.47.163:8000/ping").json())
+
 
 
 
