@@ -12,3 +12,4 @@ pandas
 matplotlib
 pyvis==0.3.2
 networkx>=2.8
+stvis
