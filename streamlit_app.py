@@ -15,8 +15,19 @@ if "status" not in st.session_state:
     st.session_state.status = "graph"  # 바로 그래프 단계로
 if "ontology_triples" not in st.session_state:
     st.session_state.ontology_triples = [
-        {"subject": "Alice", "relation": "works_for", "object": "Acme Corp"},
-        {"subject": "Acme Corp", "relation": "based_in", "object": "San Francisco"}
+        {"subject": "LG전자", "relation": "제조", "object": "스마트폰"},
+        {"subject": "LG전자", "relation": "제조", "object": "TV"},
+        {"subject": "스마트폰", "relation": "사용", "object": "OLED 디스플레이"},
+        {"subject": "TV", "relation": "사용", "object": "OLED 디스플레이"},
+        {"subject": "OLED 디스플레이", "relation": "생산", "object": "LG디스플레이"},
+        {"subject": "LG디스플레이", "relation": "소재", "object": "유기발광소재"},
+        {"subject": "유기발광소재", "relation": "공급", "object": "화학기업A"},
+        {"subject": "스마트폰", "relation": "운영체제", "object": "안드로이드"},
+        {"subject": "스마트폰", "relation": "통신", "object": "5G 네트워크"},
+        {"subject": "5G 네트워크", "relation": "제공", "object": "통신사B"},
+        {"subject": "TV", "relation": "스마트기능", "object": "webOS"},
+        {"subject": "webOS", "relation": "개발", "object": "LG전자 SW팀"},
+        {"subject": "LG전자 SW팀", "relation": "위치", "object": "서울 R&D 센터"},
     ]
 
 # 사이드바: 파일 업로드 (데모에서는 동작 안 함)
@@ -204,5 +215,6 @@ with col2:
 # import requests
 # st.write("여기에..")
 # st.write(requests.get("http://10.233.47.163:8000/ping").json())
+
 
 
