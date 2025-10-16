@@ -110,6 +110,54 @@ if "status" not in st.session_state:
 if "ontology_triples" not in st.session_state:
     st.session_state.ontology_triples = []
 
+
+# 사이드바에 테스트 버튼 추가
+if st.sidebar.button("테스트 전체 프로세스 실행"):
+    for step in ["embedding", "ontology", "graph", "answer", "done"]:
+        st.session_state.status = step
+        st.write(f"현재 status: {step}")
+
+        if step == "embedding":
+            st.info("📘 문서 임베딩 중...")
+            time.sleep(1.0)
+            st.session_state.ontology_triples = [
+                {"subject": "Alice", "relation": "works_for", "object": "Acme Corp"},
+            ]
+
+        elif step == "ontology":
+            st.success("✅ 임베딩 완료")
+            st.info("🔍 온톨로지 추출 중...")
+            time.sleep(1.3)
+            st.session_state.ontology_triples.append({
+                "subject": "Acme Corp",
+                "relation": "based_in",
+                "object": "San Francisco"
+            })
+
+        elif step == "graph":
+            st.success("✅ 온톨로지 부분 확장됨")
+            st.info("🌐 지식 그래프 렌더링 중...")
+            G = nx.DiGraph()
+            for t in st.session_state.ontology_triples:
+                G.add_edge(t["subject"], t["object"], relation=t["relation"])
+            net = Network(height="400px", width="800px", directed=True)
+            net.from_nx(G)
+            tmpfile = "graph.html"
+            net.save_graph(tmpfile)
+            html = open(tmpfile, 'r', encoding="utf-8").read()
+            st.components.v1.html(html, height=450)
+
+        elif step == "answer":
+            st.success("✅ 그래프 렌더링 완료")
+            st.info("💡 답변 생성 중...")
+            time.sleep(0.7)
+            st.write("Alice works for Acme Corp, which is based in San Francisco.")
+
+        elif step == "done":
+            st.write("✨ 데모 완료")
+
+        time.sleep(0.5)  # 각 단계 간 간격
+
 # 사이드바: 파일 업로드
 uploaded = st.sidebar.file_uploader("문서 업로드", type=["pdf", "docx", "txt", "xlsx"])
 if uploaded:
@@ -230,6 +278,7 @@ with col2:
 # import requests
 # st.write("여기에..")
 # st.write(requests.get("http://10.233.47.163:8000/ping").json())
+
 
 
 
